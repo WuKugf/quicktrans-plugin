@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" width="1200" height="760" role="img" aria-label="设置页 AI 引擎与站点规则界面示意">
+  <defs>
+    <linearGradient id="s3bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b100e"/>
+      <stop offset="1" stop-color="#070a09"/>
+    </linearGradient>
+    <linearGradient id="s3btn" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#a9ddca"/>
+      <stop offset="1" stop-color="#5fa08e"/>
+    </linearGradient>
+    <radialGradient id="s3glow" cx="80%" cy="10%" r="60%">
+      <stop offset="0" stop-color="#2f5148" stop-opacity=".3"/>
+      <stop offset="1" stop-color="#2f5148" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1200" height="760" fill="url(#s3bg)"/>
+  <rect width="1200" height="760" fill="url(#s3glow)"/>
+
+  <!-- 侧边栏 -->
+  <rect width="284" height="760" fill="#0c1110"/>
+  <line x1="284" y1="0" x2="284" y2="760" stroke="#f2efe7" stroke-opacity=".08"/>
+
+  <rect x="36" y="34" width="38" height="38" rx="10" fill="url(#s3btn)"/>
+  <text x="55" y="60" text-anchor="middle" fill="#08110e" font-size="19" font-weight="700" font-family="PingFang SC, Microsoft YaHei, sans-serif">译</text>
+  <text x="86" y="52" fill="#f2efe7" font-size="15" font-weight="600" letter-spacing="1.6" font-family="Songti SC, serif">快译译</text>
+  <text x="86" y="68" fill="#5e6a66" font-size="8.5" letter-spacing="2.4" font-family="DejaVu Sans Mono, monospace">QUICKTRANS</text>
+
+  <g font-family="PingFang SC, Microsoft YaHei, sans-serif" font-size="12.5" fill="#9aa39f">
+    <text x="56" y="132">通用设置</text>
+    <text x="56" y="178">翻译缓存</text>
+    <text x="56" y="224">语言与检测</text>
+    <text x="56" y="270">增强功能</text>
+    <text x="56" y="362">缓存与数据</text>
+    <text x="56" y="408">使用教程</text>
+    <text x="56" y="454">更新日志</text>
+  </g>
+
+  <!-- 激活项：AI 接口 -->
+  <rect x="28" y="290" width="228" height="44" rx="9" fill="#93c9b7" fill-opacity=".1"/>
+  <rect x="28" y="290" width="2.5" height="44" rx="1" fill="#93c9b7"/>
+  <text x="56" y="317" fill="#f2efe7" font-size="12.5" font-weight="600" font-family="PingFang SC, Microsoft YaHei, sans-serif">AI 接口</text>
+  <circle cx="236" cy="312" r="3.5" fill="#93c9b7"/>
+
+  <text x="40" y="716" fill="#4f5a56" font-size="8.5" letter-spacing="1.8" font-family="DejaVu Sans Mono, monospace">WUKU-TRANSLATE · V1.1.0</text>
+
+  <!-- 主体 -->
+  <text x="340" y="92" fill="#f2efe7" font-size="30" font-family="Songti SC, Noto Serif CJK SC, Georgia, serif">AI 接口</text>
+  <text x="340" y="120" fill="#6f7b77" font-size="11.5" font-family="PingFang SC, Microsoft YaHei, sans-serif">任何兼容 OpenAI Chat Completions 的服务，都可以接进来。</text>
+
+  <rect x="982" y="66" width="182" height="38" rx="19" fill="url(#s3btn)"/>
+  <text x="1073" y="90" text-anchor="middle" fill="#08110e" font-size="11.5" font-weight="600" font-family="PingFang SC, Microsoft YaHei, sans-serif">保存并授权域名</text>
+
+  <!-- 表单：左列 -->
+  <g font-family="PingFang SC, Microsoft YaHei, sans-serif">
+    <text x="340" y="178" fill="#9aa39f" font-size="10.5" letter-spacing="1.2">BASE URL</text>
+    <rect x="340" y="190" width="376" height="42" rx="8" fill="#0f1513" stroke="#f2efe7" stroke-opacity=".1"/>
+    <text x="358" y="216" fill="#d8d5cd" font-size="12" font-family="DejaVu Sans Mono, monospace">https://api.openai.com/v1</text>
+
+    <text x="340" y="266" fill="#9aa39f" font-size="10.5" letter-spacing="1.2">API KEY</text>
+    <rect x="340" y="278" width="376" height="42" rx="8" fill="#0f1513" stroke="#f2efe7" stroke-opacity=".1"/>
+    <text x="358" y="304" fill="#d8d5cd" font-size="14" letter-spacing="3" font-family="DejaVu Sans Mono, monospace">•••••••••••••••••••••</text>
+    <text x="698" y="304" text-anchor="end" fill="#5e6a66" font-size="9" font-family="DejaVu Sans Mono, monospace">已保存</text>
+
+    <text x="340" y="354" fill="#9aa39f" font-size="10.5" letter-spacing="1.2">模型名称</text>
+    <rect x="340" y="366" width="376" height="42" rx="8" fill="#0f1513" stroke="#f2efe7" stroke-opacity=".1"/>
+    <text x="358" y="392" fill="#d8d5cd" font-size="12" font-family="DejaVu Sans Mono, monospace">gpt-4o-mini</text>
+    <text x="698" y="392" text-anchor="end" fill="#5e6a66" font-size="9">▾</text>
+  </g>
+
+  <!-- 表单：右列 -->
+  <g font-family="PingFang SC, Microsoft YaHei, sans-serif">
+    <text x="760" y="178" fill="#9aa39f" font-size="10.5" letter-spacing="1.2">温度</text>
+    <text x="1100" y="178" text-anchor="end" fill="#93c9b7" font-size="11" font-family="DejaVu Sans Mono, monospace">0.2</text>
+    <rect x="760" y="198" width="340" height="3" rx="1.5" fill="#f2efe7" fill-opacity=".1"/>
+    <rect x="760" y="198" width="88" height="3" rx="1.5" fill="#93c9b7"/>
+    <circle cx="848" cy="199.5" r="6" fill="#93c9b7"/>
+    <text x="760" y="226" fill="#4f5a56" font-size="9">网页翻译建议 0.1 – 0.3</text>
+
+    <text x="760" y="266" fill="#9aa39f" font-size="10.5" letter-spacing="1.2">批量条数</text>
+    <rect x="760" y="278" width="160" height="42" rx="8" fill="#0f1513" stroke="#f2efe7" stroke-opacity=".1"/>
+    <text x="778" y="304" fill="#d8d5cd" font-size="12" font-family="DejaVu Sans Mono, monospace">6</text>
+    <text x="938" y="304" fill="#5e6a66" font-size="9">≤ 2200 字符</text>
+
+    <text x="760" y="354" fill="#9aa39f" font-size="10.5" letter-spacing="1.2">JSON 数组模式</text>
+    <rect x="1046" y="338" width="44" height="24" rx="12" fill="#93c9b7" fill-opacity=".9"/>
+    <circle cx="1079" cy="350" r="8" fill="#08110e"/>
+    <text x="760" y="390" fill="#4f5a56" font-size="9">批量时要求模型返回等长同序的字符串数组</text>
+  </g>
+
+  <!-- 系统提示词 -->
+  <g font-family="PingFang SC, Microsoft YaHei, sans-serif">
+    <text x="340" y="444" fill="#9aa39f" font-size="10.5" letter-spacing="1.2">系统提示词</text>
+    <text x="1100" y="444" text-anchor="end" fill="#5e6a66" font-size="9">恢复默认 · 支持 {{targetLangName}}</text>
+    <rect x="340" y="456" width="800" height="180" rx="10" fill="#0f1513" stroke="#f2efe7" stroke-opacity=".1"/>
+    <g fill="#a8b0ac" font-size="11.5" font-family="DejaVu Sans Mono, monospace">
+      <text x="360" y="486">你是专业的网页翻译引擎。请把用户提供的内容翻译成{{targetLangName}}。</text>
+      <text x="360" y="512">要求：</text>
+      <text x="360" y="538">1. 只输出译文，不要解释、不要加引号、不要复述原文；</text>
+      <text x="360" y="564">2. 保持原文语气、术语与标点风格，专有名词使用通行译名；</text>
+      <text x="360" y="590">3. 保留原文中的 HTML 标签、占位符与链接结构；</text>
+      <text x="360" y="616">4. 若某段内容无需翻译，原样返回该段。</text>
+    </g>
+  </g>
+
+  <!-- 状态条 -->
+  <rect x="340" y="674" width="800" height="44" rx="9" fill="#0f1513" stroke="#93c9b7" stroke-opacity=".22"/>
+  <circle cx="362" cy="696" r="4" fill="#93c9b7"/>
+  <text x="376" y="700" fill="#93c9b7" font-size="10.5" font-family="PingFang SC, Microsoft YaHei, sans-serif">接口已就绪 · 主机权限已授权 · 失败时自动降级到 Google / MyMemory</text>
+  <text x="1120" y="700" text-anchor="end" fill="#5e6a66" font-size="9" font-family="DejaVu Sans Mono, monospace">HOST PERMISSION</text>
+</svg>

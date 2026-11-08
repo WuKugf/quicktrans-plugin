@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>快译译 · QuickTrans — 网页一键翻译浏览器插件</title>
+<meta name="description" content="快译译 · QuickTrans（wuku-translate）v1.1.0：整页翻译、划词翻译、双语对照，内置 Google / MyMemory，支持 OpenAI 兼容 AI 引擎、自定义请求模板与站点规则。Chrome 110+ / Edge 通用 MV3 安装包。">
+<meta name="theme-color" id="themeColor" content="#060807">
+<link rel="icon" type="image/png" href="assets/img/icon.png">
+<link rel="apple-touch-icon" href="assets/img/icon.png">
+<link rel="stylesheet" href="assets/css/style.css">
+<!-- 在首屏绘制前恢复主题，避免闪烁 -->
+<script>
+(function(){try{var t=localStorage.getItem("qt-theme");if(t==="light"||t==="custom"||t==="dark")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();
+</script>
+</head>
+<body>
+
+<noscript><style>
+  .loader{display:none!important}
+  body{overflow:auto!important}
+  [data-reveal]{opacity:1!important;transform:none!important;filter:none!important}
+  .manifesto .line{color:var(--fg)}
+  .ring{display:none}
+</style></noscript>
+
+<div class="grain" aria-hidden="true"></div>
+<div class="progress" aria-hidden="true"><i id="pbar"></i></div>
+
+<!-- 载入层 -->
+<div class="loader" id="loader">
+  <div class="loader__in">
+    <img class="loader__mark" src="assets/img/icon.png" alt="">
+    <div class="loader__name">快译译</div>
+    <div class="loader__bar"><i id="lbar"></i></div>
+    <div class="loader__num" id="lnum">000 / 100</div>
+  </div>
+</div>
+
+<!-- 顶部导航 -->
+<header class="nav" id="nav">
+  <a class="brand" href="#top">
+    <img src="assets/img/icon.png" alt="快译译">
+    <b>快译译</b>
+    <s>/ QUICKTRANS</s>
+  </a>
+  <nav class="nav__links" aria-label="主导航">
+    <a href="#top">首页</a>
+    <a href="#features">功能介绍</a>
+    <a href="#download">下载</a>
+    <a href="#docs">文档</a>
+    <a href="#changelog">更新日志</a>
+  </nav>
+  <div class="nav__right">
+    <div class="theme" id="theme" role="group" aria-label="主题切换">
+      <button type="button" data-theme-set="light" aria-label="浅色主题" title="浅色">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.6v2.6M12 18.8v2.6M2.6 12h2.6M18.8 12h2.6M5.4 5.4l1.8 1.8M16.8 16.8l1.8 1.8M18.6 5.4l-1.8 1.8M7.2 16.8l-1.8 1.8"/></svg>
+      </button>
+      <button type="button" data-theme-set="dark" aria-label="深色主题" title="深色">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.4 14.6A8.6 8.6 0 0 1 9.4 3.6a8.6 8.6 0 1 0 11 11z"/></svg>
+      </button>
+      <button type="button" data-theme-set="custom" aria-label="自定义主题" title="自定义">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18h1.4a2.1 2.1 0 0 0 0-4.2h-.8a1.7 1.7 0 0 1 0-3.4H16A5 5 0 0 0 21 8.4 5.4 5.4 0 0 0 15.6 3z"/><circle cx="7.6" cy="10" r="1.15" fill="currentColor" stroke="none"/><circle cx="10.2" cy="6.8" r="1.15" fill="currentColor" stroke="none"/><circle cx="14.4" cy="6.8" r="1.15" fill="currentColor" stroke="none"/></svg>
+      </button>
+      <div class="theme__pop" id="themePop">
+        <p class="mono">自定义主色</p>
+        <div class="theme__sw">
+          <button type="button" data-accent="#5ad0a8" style="--sw:#5ad0a8" aria-label="薄荷绿"></button>
+          <button type="button" data-accent="#7cc4ff" style="--sw:#7cc4ff" aria-label="雾蓝"></button>
+          <button type="button" data-accent="#c9a2ff" style="--sw:#c9a2ff" aria-label="藤紫"></button>
+          <button type="button" data-accent="#ffb35c" style="--sw:#ffb35c" aria-label="琥珀"></button>
+          <button type="button" data-accent="#ff8da1" style="--sw:#ff8da1" aria-label="绯粉"></button>
+        </div>
+        <label class="theme__pick">
+          <span>取色器</span>
+          <input type="color" id="accentPick" value="#5ad0a8" aria-label="选择自定义主色">
+        </label>
+      </div>
+    </div>
+    <a class="nav__cta" href="#download"><i></i>下载插件</a>
+  </div>
+</header>
+
+<!-- 左侧章节导航 -->
+<aside class="side" aria-label="章节导航">
+  <a href="#top" class="on"><i></i><span>首页</span></a>
+  <a href="#features"><i></i><span>功能介绍</span></a>
+  <a href="#download"><i></i><span>下载</span></a>
+  <a href="#docs"><i></i><span>文档</span></a>
+  <a href="#changelog"><i></i><span>更新日志</span></a>
+</aside>
+
+<main>
+
+  <!-- ================= 首页 ================= -->
+  <section class="hero" id="top">
+    <div class="hero__bg"></div>
+    <div class="hero__grid-lines" aria-hidden="true"></div>
+
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow" data-reveal><span class="dot"></span>chrome + edge · mv3 · 19 种目标语言</p>
+        <h1 class="display" data-reveal style="--d:80ms">
+          <span class="l1">快译译</span>
+          <span class="l2">网页翻译，<em>一步到位</em></span>
+        </h1>
+        <p class="lead" data-reveal style="--d:160ms">
+          整页翻译、划词气泡、双语对照，三种方式随取随用。<br>
+          <b>保留原有排版与链接</b> —— 只换文字，不动结构。<br>
+          也能接上你自己的 AI 引擎。
+        </p>
+        <div class="cta" data-reveal style="--d:240ms">
+          <a class="btn btn--solid magnetic" href="#download">下载插件<small>v1.1.0 · 自动识别</small></a>
+          <a class="btn btn--ghost magnetic" href="#docs">查看文档<small>加载已解压的扩展</small></a>
+        </div>
+        <ul class="hero-meta" data-reveal style="--d:320ms">
+          <li><b>v1.1.0</b><span>当前版本</span></li>
+          <li><b>Chrome / Edge</b><span>同一份 MV3 包</span></li>
+          <li><b>0 埋点</b><span>无统计上传</span></li>
+        </ul>
+      </div>
+
+      <!-- 浏览器窗口装置：展示双语对照与划词气泡 -->
+      <div class="hero__stage" id="stage">
+        <div class="stage-glow"></div>
+        <div class="orbits" aria-hidden="true"><span class="ring1"></span><span class="ring2"></span></div>
+
+        <div class="tilt" id="tilt">
+          <div class="window">
+            <div class="window__bar">
+              <span class="win-dots"><i></i><i></i><i></i></span>
+              <span class="window__url">example.com/longform/a-quieter-web</span>
+              <span class="window__ext"><img src="assets/img/icon.png" alt="">已开启</span>
+            </div>
+            <div class="window__body">
+              <div class="fake-kicker">LONGFORM · 6 MIN READ</div>
+              <div class="fake-title">A quieter way to read the web</div>
+              <div class="fake-line w92"></div>
+              <div class="fake-line w78"></div>
+              <div class="fake-line w86"></div>
+              <p class="fake-sel">Translate only the part you need.</p>
+              <p class="fake-tr">只翻译你需要的部分，其余保持原样。</p>
+              <div class="fake-line w88"></div>
+              <div class="fake-line w64"></div>
+
+              <!-- 划词气泡 -->
+              <div class="bubble">
+                <div class="bubble__head">
+                  <img src="assets/img/icon.png" alt="">
+                  <b>快译译</b>
+                  <span>EN → 中文</span>
+                </div>
+                <p class="bubble__src">Translate only the part you need</p>
+                <p class="bubble__dst">只翻译你需要的部分</p>
+                <div class="bubble__foot"><span>⌘ ⇧ T</span><span>复制 · 朗读 · 换引擎</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <span class="float-tag t-a">划词翻译</span>
+        <span class="float-tag t-b">双语对照</span>
+        <span class="float-tag t-c">19 种目标语言</span>
+      </div>
+    </div>
+
+    <div class="scroll-hint" aria-hidden="true"><span>scroll</span><i></i></div>
+  </section>
+
+  <!-- ================= 跑马灯 ================= -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee__track" id="mtrack"></div>
+  </div>
+
+  <!-- ================= 01 它是什么 ================= -->
+  <section class="manifesto" id="manifesto">
+    <div class="wrap manifesto__in">
+      <p class="mono" data-reveal style="margin-bottom:clamp(30px,4vw,54px)">01 — 它是什么</p>
+      <div class="manifest">
+        <span class="line">选中，就有了译文。</span>
+        <span class="line">整页，也能安静地读完。</span>
+        <span class="line">排版和链接，都<span class="hl">留在原地</span>。</span>
+      </div>
+      <p data-reveal>快译译（技术名 <b>wuku-translate</b>）是一只装在 Chrome / Edge 里的翻译扩展。整页、划词、双语对照三种阅读方式，内置 Google 与 MyMemory，也能接上你自己的 OpenAI 兼容接口与任意请求模板。设置、缓存与站点规则只留在本机。</p>
+    </div>
+  </section>
+
+  <!-- ================= 02 界面 ================= -->
+  <section class="sec" id="interface">
+    <div class="wrap">
+      <div class="sec-head" data-reveal>
+        <div>
+          <div class="idx">02 — 界面</div>
+          <h2>三种方式，覆盖每一次阅读</h2>
+        </div>
+        <p>划词给出即时释义，整页留下双语对照，设置页把引擎与站点规则交给懂它的人。没有多余跳转。</p>
+      </div>
+
+      <div class="shots">
+        <figure class="shot" data-reveal>
+          <div class="stage">
+            <div class="browser tilt-s" style="--ry:-6; --rx:3;">
+              <div class="browser__bar"><span class="win-dots"><i></i><i></i><i></i></span><span class="browser__url">example.com/essay</span></div>
+              <img src="assets/img/shot-selection.svg" alt="划词翻译气泡界面示意">
+            </div>
+          </div>
+          <figcaption>
+            <div class="cap-top"><span class="idx">001</span><h3>划词 · 气泡释义</h3></div>
+            <p>Shadow DOM 气泡，复制、朗读、切换引擎都在里面完成。</p>
+          </figcaption>
+        </figure>
+
+        <figure class="shot" data-reveal style="--d:120ms">
+          <div class="stage">
+            <div class="browser tilt-s" style="--ry:-6; --rx:3;">
+              <div class="browser__bar"><span class="win-dots"><i></i><i></i><i></i></span><span class="browser__url">example.com/docs</span></div>
+              <img src="assets/img/shot-bilingual.svg" alt="整页双语对照界面示意">
+            </div>
+          </div>
+          <figcaption>
+            <div class="cap-top"><span class="idx">002</span><h3>整页 · 双语对照</h3></div>
+            <p>逐文本节点替换，只换文字，保留结构、链接与事件。</p>
+          </figcaption>
+        </figure>
+
+        <figure class="shot" data-reveal style="--d:240ms">
+          <div class="stage">
+            <div class="browser tilt-s" style="--ry:-6; --rx:3;">
+              <div class="browser__bar"><span class="win-dots"><i></i><i></i><i></i></span><span class="browser__url">chrome-extension://…/options.html</span></div>
+              <img src="assets/img/shot-options.svg" alt="设置页 AI 引擎与站点规则界面示意">
+            </div>
+          </div>
+          <figcaption>
+            <div class="cap-top"><span class="idx">003</span><h3>设置 · 引擎与规则</h3></div>
+            <p>Base URL、模型、温度、提示词与站点规则，都可以改。</p>
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 03 功能 ================= -->
+  <section class="sec" id="features">
+    <div class="wrap">
+      <div class="sec-head" data-reveal>
+        <div>
+          <div class="idx">03 — 功能</div>
+          <h2>该有的都有，不该有的都没有</h2>
+        </div>
+        <p>没有账号、没有会员、没有统计脚本。安装包只有 75 KB，能力都在本地与你的接口之间。</p>
+      </div>
+
+      <div class="bento">
+        <article class="card card--wide" data-reveal>
+          <div class="num">/ 01</div>
+          <h3>划词翻译</h3>
+          <p>选中即刻出现 Shadow DOM 气泡，原文与译文同屏。复制、朗读、临时切换引擎都在气泡里完成；选中内容已是中文时直接提示，不发起请求。单次超过 2000 字符不会触发，避免误选整页。</p>
+        </article>
+
+        <article class="card card--rank" data-reveal style="--d:90ms">
+          <div>
+            <div class="num">/ 02</div>
+            <h3>整页翻译</h3>
+          </div>
+          <div>
+            <div class="big">1<small>键</small></div>
+            <p class="card__hint">Alt + Shift + T 翻译 / 恢复</p>
+          </div>
+        </article>
+
+        <article class="card card--rank" data-reveal style="--d:180ms">
+          <div>
+            <div class="num">/ 03</div>
+            <h3>多语种支持</h3>
+          </div>
+          <div>
+            <div class="big">19<small>种</small></div>
+            <p class="card__hint">目标语言 · 自动检测源语言</p>
+          </div>
+        </article>
+
+        <article class="card" data-reveal>
+          <div class="num">/ 04</div>
+          <h3>双语对照</h3>
+          <p>原文保持不动，译文以带渐变竖线的段落插入其后。随时切回纯译文，或一键恢复原文。</p>
+        </article>
+
+        <article class="card" data-reveal style="--d:90ms">
+          <div class="num">/ 05</div>
+          <h3>AI 引擎</h3>
+          <p>接入任意 OpenAI 兼容接口：Base URL、API Key、模型、温度与系统提示词都可改，支持批量与 JSON 数组模式。</p>
+        </article>
+
+        <article class="card card--wide" data-reveal style="--d:180ms">
+          <div class="num">/ 06</div>
+          <h3>自定义请求模板 · 站点规则</h3>
+          <p>URL、Method、Headers、Body 与 responsePath 全部可自定义，支持 {{text}} 等占位符；还能按域名、通配符或路径为单个站点指定引擎与显示模式。主引擎失败时，自动按 AI / 自定义 → Google → MyMemory 降级。</p>
+        </article>
+
+        <article class="card" data-reveal>
+          <div class="num">/ 07</div>
+          <h3>快捷键</h3>
+          <ul class="card__keys">
+            <li><kbd>Alt</kbd><kbd>Shift</kbd><kbd>T</kbd><span>翻译 / 恢复</span></li>
+            <li><kbd>Alt</kbd><kbd>Shift</kbd><kbd>S</kbd><span>翻译选中</span></li>
+            <li><kbd>Alt</kbd><kbd>Shift</kbd><kbd>I</kbd><span>翻译输入框</span></li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 数字 ================= -->
+  <div class="wrap">
+    <div class="stats">
+      <div class="stat" data-reveal><b data-count="19">19</b><span>target languages</span></div>
+      <div class="stat" data-reveal style="--d:80ms"><b data-count="4">4</b><span>translate engines</span></div>
+      <div class="stat" data-reveal style="--d:160ms"><b data-count="0">0</b><span>tracking script</span></div>
+      <div class="stat" data-reveal style="--d:240ms"><b>1.1.0</b><span>current version</span></div>
+    </div>
+  </div>
+
+  <!-- ================= 04 FAQ ================= -->
+  <section class="sec" id="faq">
+    <div class="wrap">
+      <div class="sec-head" data-reveal>
+        <div>
+          <div class="idx">04 — 常见问题</div>
+          <h2>读之前，先问清楚</h2>
+        </div>
+        <p>安装、隐私、AI 接口与已知限制，都在这一节里说明白。</p>
+      </div>
+
+      <div class="faq" data-reveal>
+        <details class="faq__item">
+          <summary><span class="faq__q">怎么安装快译译？</span><span class="faq__ico"></span></summary>
+          <div class="faq__a"><p>下载 zip 后解压到任意固定目录（不要放在临时目录，移动后需要重新加载）。打开 <code>chrome://extensions</code>，右上角开启「开发者模式」，点击「加载已解压的扩展程序」，选择解压后的文件夹即可。首次安装会自动打开设置页。</p></div>
+        </details>
+        <details class="faq__item">
+          <summary><span class="faq__q">支持哪些浏览器？Firefox 能用吗？</span><span class="faq__ico"></span></summary>
+          <div class="faq__a"><p>Chrome 110+ 与 Edge 共用同一份 Manifest V3 安装包，安装步骤一致（Edge 打开 <code>edge://extensions</code>）。Firefox 版本暂未提供，站点不会给出不可用的下载链接。</p></div>
+        </details>
+        <details class="faq__item">
+          <summary><span class="faq__q">我的浏览数据会被上传吗？</span><span class="faq__ico"></span></summary>
+          <div class="faq__a"><p>扩展本身不收集、不上传统计数据，也不含任何第三方分析脚本。待翻译文本会发送到你所选择的翻译服务（Google、MyMemory、你配置的 AI 接口或自定义接口）；设置、翻译缓存与站点规则仅保存在本机 <code>chrome.storage.local</code>。</p></div>
+        </details>
+        <details class="faq__item">
+          <summary><span class="faq__q">AI 接口怎么配置？</span><span class="faq__ico"></span></summary>
+          <div class="faq__a"><p>在设置页「AI 接口」填写 Base URL、API Key、模型名称与温度，保存时会针对该接口域名单独申请授权。兼容 OpenAI、DeepSeek、Moonshot 以及本地 Ollama 等服务；系统提示词支持 <code>{{targetLangName}}</code> 占位符，可一键恢复默认。</p></div>
+        </details>
+        <details class="faq__item">
+          <summary><span class="faq__q">整页翻译会打乱排版吗？</span><span class="faq__ico"></span></summary>
+          <div class="faq__a"><p>整页模式逐文本节点替换，保留 DOM 结构、标签、class、事件与链接，并保留文本前后的空白以维持行内排版。无限滚动与单页路由切换后新出现的内容需要重新触发翻译；iframe、Canvas、PDF 阅读器与 <code>&lt;pre&gt;/&lt;code&gt;</code> 不会被翻译。</p></div>
+        </details>
+        <details class="faq__item">
+          <summary><span class="faq__q">快捷键冲突了怎么办？</span><span class="faq__ico"></span></summary>
+          <div class="faq__a"><p>默认快捷键为 <code>Alt+Shift+T</code>（翻译 / 恢复整页）、<code>Alt+Shift+S</code>（翻译选中文本）、<code>Alt+Shift+I</code>（翻译输入框）。如与其他扩展冲突，可在 <code>chrome://extensions/shortcuts</code> 中修改。</p></div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 05 文档 ================= -->
+  <section class="sec" id="docs">
+    <div class="wrap">
+      <div class="sec-head" data-reveal>
+        <div>
+          <div class="idx">05 — 文档</div>
+          <h2>三步，装进浏览器</h2>
+        </div>
+        <p>以 Chrome 为例；Edge 步骤一致，只是扩展管理页地址不同。Firefox 暂未提供安装包。</p>
+      </div>
+
+      <div class="docs">
+        <article class="doc-card" data-reveal>
+          <span class="doc-card__os">Chrome · 推荐</span>
+          <h3>安装到 Chrome</h3>
+          <ol>
+            <li>下载 zip，解压到固定目录</li>
+            <li>打开 <code>chrome://extensions</code></li>
+            <li>开启开发者模式，加载已解压的扩展程序</li>
+          </ol>
+          <a class="doc-card__go" href="#download">去下载 <span>↓</span></a>
+        </article>
+
+        <article class="doc-card" data-reveal style="--d:90ms">
+          <span class="doc-card__os">Edge · 同一安装包</span>
+          <h3>安装到 Edge</h3>
+          <ol>
+            <li>使用同一份 v1.1.0 zip</li>
+            <li>打开 <code>edge://extensions</code></li>
+            <li>开启开发者模式，加载已解压的扩展程序</li>
+          </ol>
+          <a class="doc-card__go" href="#download">去下载 <span>↓</span></a>
+        </article>
+
+        <article class="doc-card is-off" data-reveal style="--d:180ms">
+          <span class="doc-card__os">Firefox · 暂未提供</span>
+          <h3>Firefox 版本</h3>
+          <ol>
+            <li>当前仅发布 Chrome / Edge 的 MV3 包</li>
+            <li>Firefox 需要独立的 manifest 适配</li>
+            <li>发布后会在此处更新入口</li>
+          </ol>
+          <span class="doc-card__go is-off">暂未提供</span>
+        </article>
+      </div>
+
+      <p class="docs-note" data-reveal>更新代码后，在扩展管理页点击该扩展的「刷新」按钮即可，无需重装。安装包为免构建的原生版本，不需要 Node.js 或 npm。</p>
+    </div>
+  </section>
+
+  <!-- ================= 06 更新日志 ================= -->
+  <section class="sec" id="changelog">
+    <div class="wrap">
+      <div class="sec-head" data-reveal>
+        <div>
+          <div class="idx">06 — 更新日志</div>
+          <h2>每一次改动，都写在这里</h2>
+        </div>
+        <p>版本号遵循语义化版本；完整记录见仓库中的 CHANGELOG.md。</p>
+      </div>
+
+      <ol class="log">
+        <li data-reveal>
+          <div class="log__side"><b>v1.1.0</b><span>2026.11.07</span></div>
+          <div class="log__body">
+            <h3>悬浮球、翻译面板与五项增强</h3>
+            <ul>
+              <li>悬浮球：页面边缘半透明胶囊，拖动换边、位置记忆、始终置顶</li>
+              <li>翻译面板：右侧抽屉，输入即译，可切换引擎与目标语言</li>
+              <li>视频双语字幕、输入框翻译（三连空格 / Alt+Shift+I）、漫画图片翻译</li>
+              <li>弹窗快捷开关与「增强功能」配置面板</li>
+            </ul>
+          </div>
+        </li>
+        <li data-reveal style="--d:90ms">
+          <div class="log__side"><b>v1.0.0</b><span>2026.11.06</span></div>
+          <div class="log__body">
+            <h3>首个公开版本</h3>
+            <ul>
+              <li>整页翻译：保留 DOM 结构，渐进渲染，进度提示与中断续译</li>
+              <li>划词气泡：复制 / 朗读 / 临时切换引擎</li>
+              <li>双语对照、站点规则、AI 引擎与自定义请求模板</li>
+              <li>失败自动降级、翻译缓存、语言检测、快捷键与右键菜单</li>
+            </ul>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ================= 07 下载 ================= -->
+  <section class="dl" id="download">
+    <div class="wrap">
+      <p class="mono" data-reveal>07 — 获取</p>
+      <h2 class="display" data-reveal style="--d:80ms;margin-top:22px">装好，就能用。</h2>
+      <p data-reveal style="--d:160ms">一份 MV3 安装包，Chrome 与 Edge 通用。自动识别你的浏览器并给出对应版本；识别不到时，可手动选择。Firefox 暂未提供。</p>
+
+      <div class="dl-actions" data-reveal style="--d:240ms">
+        <a class="btn btn--ghost magnetic dl-doc" href="#docs">查看文档<small>加载已解压的扩展程序</small></a>
+
+        <button class="btn btn--primary btn--xl magnetic" id="dlBtn" type="button">
+          <span class="dl-btn__ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M12 4v12M6.5 11.2 12 16.7l5.5-5.5M4.5 20h15"/></svg>
+          </span>
+          <span class="dl-btn__txt">下载插件<small id="dlMeta">v1.1.0 · 正在识别浏览器…</small></span>
+        </button>
+
+        <p class="dl-detect" id="dlDetect">正在识别浏览器…</p>
+        <button class="dl-manual" id="dlManual" type="button">识别不准？手动选择浏览器</button>
+      </div>
+
+      <div class="dlgrid" data-reveal style="--d:300ms">
+        <a class="dlcard" data-browser="chrome" href="download/wuku-translate.zip" download>
+          <span class="dlcard__os">Chrome</span>
+          <span class="dlcard__go">↓</span>
+          <b>下载 Chrome 版</b>
+          <small>v1.1.0 · Chrome 110+</small>
+        </a>
+        <a class="dlcard" data-browser="edge" href="download/wuku-translate.zip" download>
+          <span class="dlcard__os">Edge</span>
+          <span class="dlcard__go">↓</span>
+          <b>下载 Edge 版</b>
+          <small>v1.1.0 · 同一份 MV3 包</small>
+        </a>
+        <div class="dlcard is-off">
+          <span class="dlcard__os">Firefox</span>
+          <span class="dlcard__go">—</span>
+          <b>暂未提供</b>
+          <small>需要独立适配，请勿使用其它包</small>
+        </div>
+      </div>
+
+      <p class="dl-note" data-reveal style="--d:340ms">
+        解压后打开 <b>chrome://extensions</b>（Edge 为 <b>edge://extensions</b>），开启开发者模式，点击「加载已解压的扩展程序」。安装包 <b>75 KB</b>，免构建。
+      </p>
+      <p class="hash" data-reveal style="--d:380ms">
+        <b>SHA-256 / ZIP</b> 4de931cdca14c9b438a673aa2540a36970e0ccceb05ecb45a7a5987e0e47ccb0
+      </p>
+    </div>
+  </section>
+
+</main>
+
+<!-- ================= 页脚 ================= -->
+<footer class="foot">
+  <div class="wrap foot__in">
+    <a class="brand" href="#top">
+      <img src="assets/img/icon.png" alt="">
+      <b>快译译</b>
+      <s>/ QUICKTRANS</s>
+    </a>
+    <nav>
+      <a href="#top">首页</a>
+      <a href="#features">功能介绍</a>
+      <a href="#download">下载</a>
+      <a href="#docs">文档</a>
+      <a href="#changelog">更新日志</a>
+    </nav>
+  </div>
+  <div class="wrap foot__legal">
+    <div class="foot__line">
+      <span>© 2026 快译译 · QuickTrans · 技术名 wuku-translate · v1.1.0</span>
+      <span>版权归 WUKU 所有 · 保留所有权利</span>
+    </div>
+    <div class="foot__line">
+      <span class="foot__privacy">隐私说明：扩展不收集统计数据；待翻译文本仅发送至你选择的翻译服务，设置与缓存保存在本机。</span>
+      <a class="foot__repo" href="https://github.com/WuKugf/quicktrans-plugin" target="_blank" rel="noopener">开源地址 · GitHub ↗</a>
+    </div>
+  </div>
+</footer>
+
+<div class="ring" id="ring" aria-hidden="true"></div>
+
+<!-- ================= 浏览器选择弹窗 ================= -->
+<div class="modal" id="modal" aria-hidden="true">
+  <div class="modal__mask" data-close></div>
+  <div class="modal__panel" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <p class="mono">选择浏览器</p>
+    <h3 id="modalTitle">你的浏览器是哪一个？</h3>
+    <p class="modal__desc">Chrome 与 Edge 共用同一份 MV3 安装包；Firefox 版本暂未提供。</p>
+    <div class="modal__list">
+      <button type="button" data-browser="chrome">
+        <span class="modal__name">Chrome</span>
+        <span class="modal__meta">v1.1.0 · Chrome 110+ · 75 KB</span>
+        <span class="modal__go">↓</span>
+      </button>
+      <button type="button" data-browser="edge">
+        <span class="modal__name">Edge</span>
+        <span class="modal__meta">v1.1.0 · 同一份 MV3 包 · 75 KB</span>
+        <span class="modal__go">↓</span>
+      </button>
+      <button type="button" class="is-off" disabled>
+        <span class="modal__name">Firefox</span>
+        <span class="modal__meta">暂未提供，需要独立适配</span>
+        <span class="modal__go">—</span>
+      </button>
+    </div>
+    <button class="modal__close" type="button" data-close>关闭</button>
+  </div>
+</div>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>

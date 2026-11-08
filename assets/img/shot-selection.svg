@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" width="1200" height="760" role="img" aria-label="划词翻译气泡界面示意">
+  <defs>
+    <linearGradient id="s1bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0c110f"/>
+      <stop offset="1" stop-color="#080b0a"/>
+    </linearGradient>
+    <linearGradient id="s1hl" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#93c9b7" stop-opacity=".24"/>
+      <stop offset="1" stop-color="#93c9b7" stop-opacity=".06"/>
+    </linearGradient>
+    <linearGradient id="s1btn" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#a9ddca"/>
+      <stop offset="1" stop-color="#5fa08e"/>
+    </linearGradient>
+    <radialGradient id="s1glow" cx="70%" cy="30%" r="60%">
+      <stop offset="0" stop-color="#2f5148" stop-opacity=".35"/>
+      <stop offset="1" stop-color="#2f5148" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="s1shadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="18" stdDeviation="22" flood-color="#000" flood-opacity=".55"/>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="760" fill="url(#s1bg)"/>
+  <rect width="1200" height="760" fill="url(#s1glow)"/>
+
+  <!-- 文章内容 -->
+  <text x="96" y="104" fill="#93c9b7" font-size="12" letter-spacing="3.4" font-family="DejaVu Sans Mono, monospace">LONGFORM · 6 MIN READ</text>
+  <text x="94" y="160" fill="#f2efe7" font-size="46" font-family="Songti SC, Noto Serif CJK SC, Georgia, serif">A quieter way to read the web</text>
+  <text x="96" y="200" fill="#6f7b77" font-size="15" font-family="PingFang SC, Microsoft YaHei, sans-serif">慢一点读，反而读得更多。</text>
+
+  <g font-family="PingFang SC, Microsoft YaHei, sans-serif" font-size="16" fill="#8b948f">
+    <text x="96" y="262">The web was built for reading, yet most pages ask for something else.</text>
+    <text x="96" y="294">Popups, banners and permission prompts compete for the same attention.</text>
+    <text x="96" y="326">What if translation could stay quiet, and only touch the words you need?</text>
+  </g>
+
+  <!-- 选中段落 -->
+  <rect x="88" y="352" width="628" height="84" rx="6" fill="url(#s1hl)"/>
+  <rect x="88" y="352" width="3" height="84" fill="#93c9b7"/>
+  <g font-family="PingFang SC, Microsoft YaHei, sans-serif" font-size="18" fill="#f2efe7">
+    <text x="110" y="382">Translate only the part you need,</text>
+    <text x="110" y="410">keep the rest untouched.</text>
+  </g>
+
+  <g font-family="PingFang SC, Microsoft YaHei, sans-serif" font-size="16" fill="#8b948f">
+    <text x="96" y="484">A selection is a small, deliberate act. It tells the browser exactly</text>
+    <text x="96" y="516">where your attention is, and what deserves a second language.</text>
+    <text x="96" y="548">Everything else can stay exactly as the author wrote it.</text>
+  </g>
+
+  <rect x="96" y="600" width="86" height="6" rx="3" fill="#222b28"/>
+  <rect x="96" y="620" width="520" height="6" rx="3" fill="#1a2220"/>
+  <rect x="96" y="640" width="440" height="6" rx="3" fill="#1a2220"/>
+
+  <!-- 划词气泡 -->
+  <g filter="url(#s1shadow)">
+    <rect x="642" y="360" width="458" height="286" rx="16" fill="#111816" stroke="#93c9b7" stroke-opacity=".34"/>
+    <rect x="666" y="386" width="26" height="26" rx="7" fill="#93c9b7"/>
+    <text x="679" y="405" text-anchor="middle" fill="#08110e" font-size="14" font-weight="700" font-family="PingFang SC, Microsoft YaHei, sans-serif">译</text>
+    <text x="702" y="404" fill="#f2efe7" font-size="14" font-weight="600" letter-spacing="1" font-family="Songti SC, serif">快译译</text>
+    <text x="1058" y="403" text-anchor="end" fill="#6f7b77" font-size="10" letter-spacing="1" font-family="DejaVu Sans Mono, monospace">EN → 中文</text>
+
+    <line x1="666" y1="424" x2="1076" y2="424" stroke="#f2efe7" stroke-opacity=".08"/>
+
+    <text x="666" y="456" fill="#6f7b77" font-size="11" font-family="DejaVu Sans Mono, monospace">keep the rest untouched</text>
+    <text x="666" y="490" fill="#93c9b7" font-size="20" font-family="PingFang SC, Microsoft YaHei, sans-serif">其余部分保持原样</text>
+
+    <g font-family="PingFang SC, Microsoft YaHei, sans-serif" font-size="11" fill="#a8b0ac">
+      <rect x="666" y="516" width="66" height="28" rx="14" fill="#f2efe7" fill-opacity=".04" stroke="#f2efe7" stroke-opacity=".12"/>
+      <text x="699" y="534" text-anchor="middle">复制</text>
+      <rect x="740" y="516" width="66" height="28" rx="14" fill="#f2efe7" fill-opacity=".04" stroke="#f2efe7" stroke-opacity=".12"/>
+      <text x="773" y="534" text-anchor="middle">朗读</text>
+      <rect x="814" y="516" width="90" height="28" rx="14" fill="#f2efe7" fill-opacity=".04" stroke="#f2efe7" stroke-opacity=".12"/>
+      <text x="859" y="534" text-anchor="middle">切换引擎</text>
+    </g>
+
+    <line x1="666" y1="568" x2="1076" y2="568" stroke="#f2efe7" stroke-opacity=".08"/>
+    <g font-family="DejaVu Sans Mono, monospace" font-size="9.5" fill="#6f7b77" letter-spacing="1">
+      <text x="666" y="596">SHADOW DOM 气泡</text>
+      <text x="1076" y="596" text-anchor="end">ESC 关闭</text>
+      <text x="666" y="618" fill="#4f5a56">选中内容为中文时不发起请求</text>
+    </g>
+
+    <rect x="666" y="632" width="46" height="4" rx="2" fill="#93c9b7" fill-opacity=".5"/>
+    <rect x="718" y="632" width="26" height="4" rx="2" fill="#93c9b7" fill-opacity=".2"/>
+  </g>
+
+  <!-- 顶部提示胶囊 -->
+  <g font-family="DejaVu Sans Mono, monospace" font-size="9.5" letter-spacing="2">
+    <rect x="900" y="76" width="206" height="30" rx="15" fill="#0d1311" stroke="#f2efe7" stroke-opacity=".1"/>
+    <circle cx="920" cy="91" r="4" fill="#93c9b7"/>
+    <text x="934" y="95" fill="#a8b0ac">QUICKTRANS ON</text>
+  </g>
+</svg>

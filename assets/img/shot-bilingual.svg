@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" width="1200" height="760" role="img" aria-label="整页双语对照界面示意">
+  <defs>
+    <linearGradient id="s2bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0c110f"/>
+      <stop offset="1" stop-color="#080b0a"/>
+    </linearGradient>
+    <linearGradient id="s2bar" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#93c9b7"/>
+      <stop offset="1" stop-color="#2f5148"/>
+    </linearGradient>
+    <radialGradient id="s2glow" cx="30%" cy="20%" r="70%">
+      <stop offset="0" stop-color="#2f5148" stop-opacity=".28"/>
+      <stop offset="1" stop-color="#2f5148" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1200" height="760" fill="url(#s2bg)"/>
+  <rect width="1200" height="760" fill="url(#s2glow)"/>
+
+  <!-- 页头 -->
+  <text x="96" y="98" fill="#93c9b7" font-size="12" letter-spacing="3.4" font-family="DejaVu Sans Mono, monospace">GUIDE · BILINGUAL MODE</text>
+  <text x="94" y="152" fill="#f2efe7" font-size="44" font-family="Songti SC, Noto Serif CJK SC, Georgia, serif">Reading in two languages</text>
+  <text x="96" y="190" fill="#6f7b77" font-size="15" font-family="PingFang SC, Microsoft YaHei, sans-serif">原文不动，译文落在每一段之后。</text>
+
+  <g font-family="DejaVu Sans Mono, monospace" font-size="9.5" letter-spacing="2">
+    <rect x="924" y="74" width="180" height="30" rx="15" fill="#93c9b7" fill-opacity=".12" stroke="#93c9b7" stroke-opacity=".4"/>
+    <circle cx="944" cy="89" r="4" fill="#93c9b7"/>
+    <text x="958" y="93" fill="#93c9b7">双语对照</text>
+  </g>
+
+  <line x1="96" y1="224" x2="1104" y2="224" stroke="#f2efe7" stroke-opacity=".07"/>
+
+  <!-- 第一段 -->
+  <text x="96" y="274" fill="#9aa39f" font-size="17" font-family="PingFang SC, Microsoft YaHei, sans-serif">The best reading tools disappear while you use them. They do not ask</text>
+  <text x="96" y="303" fill="#9aa39f" font-size="17" font-family="PingFang SC, Microsoft YaHei, sans-serif">for an account, and they do not rewrite the page you are already reading.</text>
+  <g>
+    <rect x="96" y="326" width="3" height="54" fill="url(#s2bar)"/>
+    <text x="116" y="349" fill="#f2efe7" font-size="16.5" font-family="PingFang SC, Microsoft YaHei, sans-serif">最好的阅读工具，会在你使用它的时候消失。</text>
+    <text x="116" y="374" fill="#f2efe7" font-size="16.5" font-family="PingFang SC, Microsoft YaHei, sans-serif">它不要求账号，也不会重写你正在读的页面。</text>
+  </g>
+
+  <!-- 第二段 -->
+  <text x="96" y="440" fill="#9aa39f" font-size="17" font-family="PingFang SC, Microsoft YaHei, sans-serif">Bilingual mode keeps the original paragraph in place and adds a translation</text>
+  <text x="96" y="469" fill="#9aa39f" font-size="17" font-family="PingFang SC, Microsoft YaHei, sans-serif">below it, so structure, links and line breaks all survive the process.</text>
+  <g>
+    <rect x="96" y="492" width="3" height="54" fill="url(#s2bar)"/>
+    <text x="116" y="515" fill="#f2efe7" font-size="16.5" font-family="PingFang SC, Microsoft YaHei, sans-serif">双语模式保留原段落，并在其下方添加译文，</text>
+    <text x="116" y="540" fill="#f2efe7" font-size="16.5" font-family="PingFang SC, Microsoft YaHei, sans-serif">因此结构、链接与换行都能完整保留。</text>
+  </g>
+
+  <!-- 第三段 -->
+  <text x="96" y="606" fill="#9aa39f" font-size="17" font-family="PingFang SC, Microsoft YaHei, sans-serif">Switch back to translation-only, or restore the original page with one click.</text>
+  <g>
+    <rect x="96" y="626" width="3" height="34" fill="url(#s2bar)"/>
+    <text x="116" y="649" fill="#f2efe7" font-size="16.5" font-family="PingFang SC, Microsoft YaHei, sans-serif">也可以随时切回纯译文，或一键恢复原文。</text>
+  </g>
+
+  <!-- 右侧状态卡 -->
+  <g font-family="PingFang SC, Microsoft YaHei, sans-serif">
+    <rect x="840" y="452" width="264" height="212" rx="14" fill="#111816" stroke="#f2efe7" stroke-opacity=".1"/>
+    <text x="864" y="486" fill="#6f7b77" font-size="9.5" letter-spacing="2" font-family="DejaVu Sans Mono, monospace">PAGE STATUS</text>
+    <text x="864" y="520" fill="#f2efe7" font-size="15">整页翻译 · 已完成</text>
+    <text x="864" y="546" fill="#93c9b7" font-size="11" font-family="DejaVu Sans Mono, monospace">EN → ZH-CN</text>
+
+    <rect x="864" y="568" width="216" height="4" rx="2" fill="#f2efe7" fill-opacity=".08"/>
+    <rect x="864" y="568" width="216" height="4" rx="2" fill="#93c9b7"/>
+
+    <g font-size="10" font-family="DejaVu Sans Mono, monospace">
+      <rect x="864" y="592" width="102" height="30" rx="8" fill="#f2efe7" fill-opacity=".035" stroke="#f2efe7" stroke-opacity=".1"/>
+      <text x="915" y="611" text-anchor="middle" fill="#a8b0ac">纯译文</text>
+      <rect x="976" y="592" width="104" height="30" rx="8" fill="#93c9b7" fill-opacity=".14" stroke="#93c9b7" stroke-opacity=".45"/>
+      <text x="1028" y="611" text-anchor="middle" fill="#93c9b7">双语对照</text>
+    </g>
+    <text x="864" y="648" fill="#4f5a56" font-size="9" font-family="DejaVu Sans Mono, monospace">DOM 结构保持不变 · 可随时还原</text>
+  </g>
+</svg>
